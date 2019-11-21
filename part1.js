@@ -171,3 +171,48 @@ function countUniqueValues2 (arr) {
 
 console.log(countUniqueValues2([1, 1, 1, 2]))
 console.log(countUniqueValues2([1, 2, 3, 4, 4, 4, 4, 7, 7, 12, 12, 13]))
+
+// Sliding Window pattern, time - O(N^2)
+function maxSubarraySum (arr, num) {
+  if (num > arr.length) return null
+
+  // Account for arrays with all negative numbers
+  let max = -Infinity
+  // arr length - num + 1 to signify where last window should end
+  for (let i = 0; i < arr.length - num + 1; i++) {
+    let temp = 0
+    for (let j = 0; j < num; j++) {
+      temp += arr[i + j]
+    }
+    if (temp > max) {
+      max = temp
+    }
+  }
+  return max
+}
+console.log(maxSubarraySum([4, 2, 1, 6], 1))
+console.log(maxSubarraySum([], 2))
+console.log(maxSubarraySum([2, 6, 9, 2, 1, 8, 5, 6, 3], 3))
+console.log(maxSubarraySum([1, 2, 5, 2, 8, 1, 5], 2))
+console.log(maxSubarraySum([1, 1, 5, 2, 8, 5, 5], 4))
+
+// // Sliding Window pattern, Refactor time - O(n)
+function maxSubarraySum2 (arr, num) {
+  let maxSum = 0
+  let tempSum = 0
+  if (arr.length < num) return null
+
+  for (let i = 0; i < num; i++) {
+    maxSum += arr[i]
+  }
+
+  tempSum = maxSum
+  for (let i = num; i < arr.length; i++) {
+    tempSum = tempSum - arr[i - num] + arr[i]
+    maxSum = Math.max(maxSum, tempSum)
+  }
+  return maxSum
+}
+
+console.log(maxSubarraySum2([2, 6, 9, 2, 1, 8, 5, 6, 3], 3))
+
