@@ -57,12 +57,12 @@ console.log(calculateTime('abcdefghijklmnopqrstuvwxyz', 'cba'))
 
 // optmization by adding noSwaps for conditional check
 // Time complexity O(n) = best case O(n^2) worst case
+// Average case is O(n^2)
 function bubbleSort (arr) {
   var noSwaps
   for (let i = arr.length; i > 0; i--) {
     noSwaps = true
     for (let j = 0; j < i - 1; j++) {
-      console.log(arr, arr[j], arr[j + 1])
       if (arr[j] > arr[j + 1]) {
         let temp = arr[j]
         arr[j] = arr[j + 1]
@@ -71,7 +71,6 @@ function bubbleSort (arr) {
       }
     }
     if (noSwaps) break
-    console.log('ONE PASS COMPLETE')
   }
   return arr
 }
@@ -111,3 +110,27 @@ function bubbleSort3 (arr) {
 
 console.log(bubbleSort3([37, 45, 29, 8, 12, 88, -3]))
 
+// Time complexity - O(n^2), Can be twice as fast as bubble sort
+function selectionSort (arr) {
+  for (let i = 0; i < arr.length; i++) {
+    let lowest = i
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < arr[lowest]) {
+        lowest = j
+      }
+    }
+    // Swap places
+    // if (i !== lowest) {
+    //   let temp = arr[i]
+    //   arr[i] = arr[lowest]
+    //   arr[lowest] = temp
+    // }
+    // ES6 with destructuring:
+    if (i !== lowest) {
+      ;[arr[i], arr[lowest]] = [arr[lowest], arr[i]]
+    }
+  }
+  return arr
+}
+
+console.log(selectionSort([0, 2, 34, 22, 10, 19, 17]))
