@@ -98,10 +98,10 @@ function bubbleSort3 (arr) {
   const swap = (arr, idx1, idx2) => {
     ;[arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]]
   }
-  for (let i = arr.length; i > 0; i--) {
-    for (let j = 0; j < i - 1; j++) {
-      if (arr[j] > arr[j + 1]) {
-        swap(arr, j, j + 1)
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j <= i; j++) {
+      if (arr[i] < arr[j]) {
+        swap(arr, i, j)
       }
     }
   }
@@ -134,3 +134,19 @@ function selectionSort (arr) {
 }
 
 console.log(selectionSort([0, 2, 34, 22, 10, 19, 17]))
+
+// Time complexity average & worst = O(n^2)
+function insertionSort (arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let currVal = arr[i]
+    let j = i - 1
+    while (j >= 0 && arr[j] > currVal) {
+      arr[j + 1] = arr[j]
+      j--
+    }
+    arr[j + 1] = currVal
+  }
+  return arr
+}
+
+console.log(insertionSort([2, 1, 9, 76, 4]))
