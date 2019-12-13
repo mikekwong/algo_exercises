@@ -64,11 +64,91 @@ class SinglyLinkedList {
       this.head = newNode
       this.tail = this.head
     } else {
+      // set new head's next to be old head
       newNode.next = this.head
+      // set current head to be new node
       this.head = newNode
     }
     this.length++
     return this
+  }
+
+  get (idx) {
+    if (idx < 0 || idx >= this.length) return null
+
+    let counter = 0
+    let current = this.head
+    while (counter !== idx) {
+      current = current.next
+      counter++
+    }
+    // return the found node
+    return current
+  }
+
+  set (idx, val) {
+    let foundNode = this.get(idx)
+    if (foundNode) {
+      foundNode.val = val
+      return true
+    }
+    return false
+  }
+
+  insert (idx, val) {
+    // Edge cases
+    if (idx < 0 || idx > this.length) return false
+    // !! for truthy conversio to help return true in addition to invoking method
+    if (idx === this.length) return !!this.push(val)
+    else if (idx === 0) return !!this.unshift(val)
+
+    let newNode = new Node(val)
+    let prev = this.get(idx - 1)
+    // hold former next as placeholder before the insertion
+    let temp = prev.next
+    prev.next = newNode
+    newNode.next = temp
+    this.length++
+    return true
+  }
+
+  remove (idx) {
+    if (idx < 0 || idx > this.length) return undefined
+    if (idx === this.length) return this.pop()
+    if (idx === 0) return this.shift()
+
+    let prevNode = this.get(idx - 1)
+    let removed = prevNode.next
+    prevNode.next = removed.next
+    this.length--
+    return removed
+  }
+
+  reverse () {
+    // Swap head and tail
+    let node = this.head
+    this.head = this.tail
+    this.tail = node
+
+    let next
+    let prev = null
+    for (let i = 0; i < this.length; i++) {
+      next = node.next
+      node.next = prev
+      prev = node
+      node = next
+    }
+    return this
+  }
+
+  print () {
+    let arr = []
+    let current = this.head
+    while (current) {
+      arr.push(current.val)
+      current = current.next
+    }
+    console.log(arr)
   }
 }
 
@@ -78,3 +158,6 @@ var list = new SinglyLinkedList()
 list.push('hello')
 list.push('goodbye')
 list.push('!')
+list.print()
+list.reverse()
+list.print()
