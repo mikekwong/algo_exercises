@@ -28,9 +28,18 @@ class DoublyLinkedList {
     this.length++
     return this
   }
-}
 
-let first = new Node(12)
-first.next = new Node(13)
-first.next.prev = first
-first
+  pop () {
+    if (!this.head) return undefined
+    let poppedNode = this.tail
+    if (this.length === 1) {
+      this.head = null
+      this.tail = null
+    } else {
+      this.tail = poppedNode.prev
+      this.tail.next = null
+    }
+    this.length--
+    return poppedNode
+  }
+}
